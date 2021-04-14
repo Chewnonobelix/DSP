@@ -1,0 +1,26 @@
+{
+"Iron ore": {
+"Name": "Iron ore", 
+"Crafter": 0,
+"Input": {"Iron": 1},
+"Output": {"Iron ore": 30},
+"Time": 60
+},
+
+"Iron lingot": {
+"Name": "Iron lingot",
+"Crafter": 3,
+"Input": {"Iron ore": 1},
+"Output": {"Iron lingot": 1},
+"Time": 1
+},
+
+"Steel": {
+"Name": "Steel",
+"Crafter": 3,
+"Input": {"Iron lingot": 3},
+"Output": {"Steel": 1},
+"Time": 3
+}
+
+}
