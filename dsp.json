@@ -1,34 +1,34 @@
+[
 {
-"Iron ore": {
-"Name": "Iron ore", 
-"Crafter": "0",
-"Input": {"Iron": 1},
-"Output": {"Iron ore": 30},
-"Time": 60
+"name": "iron ore", 
+"crafter": "mining",
+"input": {"iron": 1},
+"output": {"iron ore": 30},
+"time": 60
 },
 
-"Iron lingot": {
-"Name": "Iron lingot",
-"Crafter": "3",
-"Input": {"Iron ore": 1},
-"Output": {"Iron lingot": 1},
-"Time": 1
+{
+"name": "iron lingot",
+"crafter": "smelter",
+"input": {"iron ore": 1},
+"output": {"iron lingot": 1},
+"time": 1
 },
 
-"Steel": {
-"Name": "Steel",
-"Crafter": "3",
-"Input": {"Iron lingot": 3},
-"Output": {"Steel": 1},
-"Time": 3
+{
+"name": "steel",
+"crafter": "smelter",
+"input": {"iron lingot": 3},
+"output": {"steel": 1},
+"time": 3
 },
 
- "Gear": {
- "Name": "Gear",
- "Crafter": "4",
- "Input": {"Iron lingot": 1},
- "Output": {"Gear": 1},
- "Time": 1
+{
+ "name": "gear",
+ "crafter": "assembler",
+ "input": {"iron lingot": 1},
+ "output": {"gear": 1},
+ "time": 1
  }
 
-}
+]
