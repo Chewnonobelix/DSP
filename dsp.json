@@ -60,7 +60,56 @@
 "input": {"coal": 2},
 "output": {"energetic graphite": 1},
 "time": 2
-}
+},
+{
+"name": "stone",
+"crafter": "mining",
+"input": {"stone veins": 1},
+"output": {"stone": 30},
+"time": 60
+},
 
+{
+"name": "stone",
+"crafter": "mining",
+"input": {"stone veins": 1},
+"output": {"stone": 30},
+"time": 60
+},
+{
+"name": "coal",
+"crafter": "mining",
+"input": {"coal veins": 1},
+"output": {"coal": 30},
+"time": 60
+},
+{
+"name": "silicon ore", 
+"crafter": "mining",
+"input": {"silicon": 1},
+"output": {"silicon ore": 30},
+"time": 60
+},
+{
+"name": "titanium ore", 
+"crafter": "mining",
+"input": {"titanium": 1},
+"output": {"titanium ore": 30},
+"time": 60
+},
+{
+"name": "water", 
+"crafter": "pump",
+"input": {},
+"output": {"water": 30},
+"time": 60
+},
+{
+"name": "crude oil", 
+"crafter": "extractor",
+"input": {},
+"output": {"crude oil": 30},
+"time": 60
+}
 
 ]
