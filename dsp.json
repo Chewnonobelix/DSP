@@ -29,6 +29,30 @@
  "input": {"iron lingot": 1},
  "output": {"gear": 1},
  "time": 1
- }
+ },
+
+{
+"name": "copper ore", 
+"crafter": "mining",
+"input": {"copper": 1},
+"output": {"copper ore": 30},
+"time": 60
+},
+
+{
+"name": "copper lingot",
+"crafter": "smelter",
+"input": {"copper ore": 1},
+"output": {"copper lingot": 1},
+"time": 1
+},
+
+{
+"name": "circuit board",
+"crafter": "assembler",
+"input": {"copper lingot": 1, "iron lingot": 2},
+"output": {"circuit board": 2},
+"time": 1
+}
 
 ]
