@@ -94,11 +94,9 @@ class Craft:
             self.outputsStream[on] = of * self.facilities
             
     def calculate(self):
-        print("Calculate", self.name)
         sins = self.singleinputsStream()
         ret = [self]
         for ik, iv in sins.items():
-            print("input stream", ik, iv*self.facilities, "/min", "facilities: ", self.facilities, self.crafter)
             if self.crafter not in [Crafter.Mining, Crafter.Extractor, Crafter.Pump]:
                 temp = copy.deepcopy(globalDict[ik][0])
                 temp.setTargetoutput({ik: iv*self.facilities})
@@ -106,6 +104,16 @@ class Craft:
                 ret.append(temp.calculate())
         return ret
             
+def display(result, stage):
+    print("For (",stage, ") : " , result[0].facilities,  result[0].name, "facilities")
+    for ok, ov in result[0].outputsStream.items():
+        print(ok, ov, "/min")
+        
+    print("need:")
+    
+    for it in result[1:]:
+        display(it, stage +1)
+        
                 
 if __name__ == "__main__":
     load()
@@ -114,17 +122,18 @@ if __name__ == "__main__":
     #c3 = Craft("steel", crafter.Smelter, {"iron lingot": 3}, {"steel": 1}, 3)
 
     c2 = copy.deepcopy(globalDict["iron lingot"][0])
-    c3 = copy.deepcopy(globalDict["gear"][0])
+    c3 = copy.deepcopy(globalDict["circuit board"][0])
     for i in range(1, 10):
         c2.setFacilities(i)
         print("iron Lingot " +str(i)+ " facilities:" + str(c2.outputsStream["iron lingot"]))
 
     for i in range(1, 10):
         print("--------------------------")
-        c3.setTargetoutput({"gear": i * 100})
-        print("gear ", str(i*100), "Facilities:", str(c3.facilities), "output stream", c3.outputsStream["gear"], "/min")
+        c3.setTargetoutput({"circuit board": i * 100})
+ #       print("gear ", str(i*100), "Facilities:", str(c3.facilities), "output stream", c3.outputsStream["gear"], "/min")
         calc = c3.calculate()
-        #print(calc)                
+        #print(calc)         
+        display(calc, 0)
     for it in globalDict:
         print(it)
     
