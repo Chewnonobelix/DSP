@@ -12,7 +12,7 @@ import json
 
 globalDict = {}
 prefered = {}
-speed=1
+speed=1.5
 
 def load():
     fObj = open('dsp.json',)
@@ -71,27 +71,31 @@ class Craft:
             addComponent(o, self)
     
         
-    def singleoutputsStream(self):
+    def singleOutputsStream(self):
         rets = {}
         for ok, ov in self.outputs.items():
             rets[ok] = ov / self.time * 60
+            if self.crafter is Crafter.Assembler:
+                rets[ok] = rets[ok] * speed
         return rets
       
-    def singleinputsStream(self):
+    def singleInputsStream(self):
         rets = {}
         if self.inputs is not None:
             for ik, iv in self.inputs.items():
                 rets[ik] = iv / self.time * 60
+                if self.crafter is Crafter.Assembler:
+                    rets[ik] = rets[ik] * speed
         return rets
     
     def setFacilities(self, facilities):
         self.facilities = facilities
-        os = self.singleoutputsStream()
+        os = self.singleOutputsStream()
         for ok, ov in os.items():
             self.outputsStream[ok] = ov * self.facilities
 
-    def setTargetoutput(self, target):
-        os = self.singleoutputsStream()
+    def setTargetOutput(self, target):
+        os = self.singleOutputsStream()
         for on, o in target.items():
             self.facilities = math.ceil(o / os[on])
 
@@ -99,19 +103,19 @@ class Craft:
             self.outputsStream[on] = of * self.facilities
             
     def calculate(self):
-        sins = self.singleinputsStream()
+        sins = self.singleInputsStream()
         ret = [self]
         for ik, iv in sins.items():
             if self.crafter not in [Crafter.Mining, Crafter.Extractor, Crafter.Pump]:
                 if ik not in globalDict:
                     Craft(name=ik, outputs={ik: 1}, time=1)
                 temp = copy.deepcopy(globalDict[ik][0])
-                temp.setTargetoutput({ik: iv*self.facilities})
+                temp.setTargetOutput({ik: iv*self.facilities})
                 ret.append(temp.calculate())
         return ret
             
 def display(result, stage):
-    print("For (",stage, ") : " , result[0].facilities,  result[0].name, "facilities")
+    print("For (",stage, ") : " , result[0].facilities,  result[0].name, "facilities (", result[0].crafter, ")")
     for ok, ov in result[0].outputsStream.items():
         print(ok, ov, "/min")
        
@@ -128,14 +132,14 @@ if __name__ == "__main__":
     load()
 
     c2 = copy.deepcopy(globalDict["iron lingot"][0])
-    c3 = copy.deepcopy(globalDict["energetic graphite"][0])
+    c3 = copy.deepcopy(globalDict["circuit board"][0])
     for i in range(1, 10):
         c2.setFacilities(i)
         print("iron Lingot " +str(i)+ " facilities:" + str(c2.outputsStream["iron lingot"]))
 
     for i in range(1, 10):
         print("--------------------------")
-        c3.setTargetoutput({"energetic graphite": i * 100})
+        c3.setTargetOutput({"circuit board": i * 100})
         calc = c3.calculate()
         display(calc, 0)
     
