@@ -56,12 +56,16 @@ class Craft:
             self.inputs = inputs
             self.outputs = outputs
             self.time = time
+            self.inputsStream = {}
+            self.outputsStream = {}
         else: 
             self.name = jData["name"]
             self.crafter = Crafter(jData["crafter"])
             self.inputs = jData["input"]
             self.outputs = jData["output"]
             self.time = jData["time"]
+            self.inputsStream = {}
+            self.outputsStream = {}
 
         for o in self.outputs:
             addComponent(self)
@@ -108,9 +112,12 @@ def display(result, stage):
     print("For (",stage, ") : " , result[0].facilities,  result[0].name, "facilities")
     for ok, ov in result[0].outputsStream.items():
         print(ok, ov, "/min")
-        
-    print("need:")
-    
+       
+
+    if len(result) > 1:        
+        print("(", stage, ") need:")
+    else:
+        print('#####')
     for it in result[1:]:
         display(it, stage +1)
         
