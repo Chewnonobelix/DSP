@@ -53,6 +53,14 @@
 "input": {"copper lingot": 1, "iron lingot": 2},
 "output": {"circuit board": 2},
 "time": 1
+},
+{
+"name": "energetic graphite",
+"crafter": "smelter",
+"input": {"coal": 2},
+"output": {"energetic graphite": 1},
+"time": 2
 }
+
 
 ]

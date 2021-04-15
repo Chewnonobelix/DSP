@@ -21,11 +21,11 @@ def load():
     for value in jdata:
         Craft(jData = value)
     
-def addComponent(component):
+def addComponent(oname, component):
     if component in globalDict:
-        globalDict[component.name].append(component)
+        globalDict[oname].append(component)
     else:
-        globalDict[component.name] = [component]
+        globalDict[oname] = [component]
 
     prefered[component.name] = 0
     
@@ -68,7 +68,7 @@ class Craft:
             self.outputsStream = {}
 
         for o in self.outputs:
-            addComponent(self)
+            addComponent(o, self)
     
         
     def singleoutputsStream(self):
@@ -79,8 +79,9 @@ class Craft:
       
     def singleinputsStream(self):
         rets = {}
-        for ik, iv in self.inputs.items():
-            rets[ik] = iv / self.time * 60
+        if self.inputs is not None:
+            for ik, iv in self.inputs.items():
+                rets[ik] = iv / self.time * 60
         return rets
     
     def setFacilities(self, facilities):
@@ -102,9 +103,10 @@ class Craft:
         ret = [self]
         for ik, iv in sins.items():
             if self.crafter not in [Crafter.Mining, Crafter.Extractor, Crafter.Pump]:
+                if ik not in globalDict:
+                    Craft(name=ik, outputs={ik: 1}, time=1)
                 temp = copy.deepcopy(globalDict[ik][0])
                 temp.setTargetoutput({ik: iv*self.facilities})
-                #ret.append(temp)
                 ret.append(temp.calculate())
         return ret
             
@@ -124,23 +126,16 @@ def display(result, stage):
                 
 if __name__ == "__main__":
     load()
-    #c = Craft("iron ore", crafter.Mining, {"iron": 1}, {"iron ore": 30}, 60)
-    #c2 = Craft("iron lingot", crafter.Smelter, {"iron ore": 1}, {"iron lingot": 1}, 1)
-    #c3 = Craft("steel", crafter.Smelter, {"iron lingot": 3}, {"steel": 1}, 3)
 
     c2 = copy.deepcopy(globalDict["iron lingot"][0])
-    c3 = copy.deepcopy(globalDict["circuit board"][0])
+    c3 = copy.deepcopy(globalDict["energetic graphite"][0])
     for i in range(1, 10):
         c2.setFacilities(i)
         print("iron Lingot " +str(i)+ " facilities:" + str(c2.outputsStream["iron lingot"]))
 
     for i in range(1, 10):
         print("--------------------------")
-        c3.setTargetoutput({"circuit board": i * 100})
- #       print("gear ", str(i*100), "Facilities:", str(c3.facilities), "output stream", c3.outputsStream["gear"], "/min")
+        c3.setTargetoutput({"energetic graphite": i * 100})
         calc = c3.calculate()
-        #print(calc)         
         display(calc, 0)
-    for it in globalDict:
-        print(it)
     
