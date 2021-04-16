@@ -12,7 +12,8 @@ import json
 
 globalDict = {}
 prefered = {}
-speed=1.5
+speed=1
+mining = 100
 
 def load():
     fObj = open('dsp.json',)
@@ -86,6 +87,8 @@ class Craft:
                 rets[ik] = iv / self.time * 60
                 if self.crafter is Crafter.Assembler:
                     rets[ik] = rets[ik] * speed
+                if self.crafter is Crafter.Mining:
+                    rets[ik] = rets[ik] / mining * 100
         return rets
     
     def setFacilities(self, facilities):
@@ -112,6 +115,8 @@ class Craft:
                 temp = copy.deepcopy(globalDict[ik][0])
                 temp.setTargetOutput({ik: iv*self.facilities})
                 ret.append(temp.calculate())
+            elif self.crafter is Crafter.Mining:
+                self.facilities = math.ceil(self.facilities / mining * 100)
         return ret
             
 def display(result, stage):
